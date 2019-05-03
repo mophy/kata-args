@@ -1,7 +1,7 @@
 import ArgumentParser from '../main/argument-parser';
 import ArgumentSchema from '../main/argument-schema';
-import Argument from '../main/argument';
 import ArgumentTypes from '../main/argument-types';
+import Argument from '../main/argument';
 
 const BOOLEAN = ArgumentTypes.BOOLEAN;
 const STRING = ArgumentTypes.STRING;
