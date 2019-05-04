@@ -6,6 +6,8 @@ import Argument from '../main/argument';
 const BOOLEAN = ArgumentTypes.BOOLEAN;
 const STRING = ArgumentTypes.STRING;
 const INTEGER = ArgumentTypes.INTEGER;
+const STRINGS =ArgumentTypes.STRINGS;
+const INTEGERS =ArgumentTypes.INTEGERS;
 
 function expectParseSucceed(input, params) {
     let schemas = params.map(param => new ArgumentSchema(param.flag, param.type));
@@ -159,6 +161,29 @@ describe('ArgumentParser', () => {
             expectParseSucceed('-i 123 -b -i 456', [
                 { flag: 'b', type: BOOLEAN, expected: true },
                 { flag: 'i', type: INTEGER, expected: 456 },
+            ]);
+        });
+
+    });
+
+    describe('with lists', () => {
+
+        it('should handle string list arguments', () => {
+            expectParseSucceed('-g this,is,a,list', [
+                { flag: 'g', type: STRINGS, expected: ['this', 'is', 'a', 'list'] },
+            ]);
+        });
+
+        it('should handle integer list arguments', () => {
+            expectParseSucceed('-d 1,2,-3,5', [
+                { flag: 'd', type: INTEGERS, expected: [1, 2, -3, 5] },
+            ]);
+        });
+
+        it('should handle string list and integer list arguments', () => {
+            expectParseSucceed('-g this,is,a,list -d 1,2,-3,5', [
+                { flag: 'g', type: STRINGS, expected: ['this', 'is', 'a', 'list'] },
+                { flag: 'd', type: INTEGERS, expected: [1, 2, -3, 5] },
             ]);
         });
 

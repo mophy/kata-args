@@ -6,6 +6,8 @@ import ArgumentSchemas from './argument-schemas';
 const VALUE_CONVERTERS = {
     [ArgumentTypes.STRING]: value => value,
     [ArgumentTypes.INTEGER]: value => parseInt(value, 10),
+    [ArgumentTypes.STRINGS]: value => value.split(',').map(VALUE_CONVERTERS[ArgumentTypes.STRING]),
+    [ArgumentTypes.INTEGERS]: value => value.split(',').map(VALUE_CONVERTERS[ArgumentTypes.INTEGER]),
 };
 
 export default class ArgumentParser {
@@ -41,7 +43,7 @@ export default class ArgumentParser {
     }
 
     parseArgumentValue(schema) {
-        return VALUE_PARSERS[schema.type].call(this, schema);
+        return schema.isBoolean() ? true : this.nextValue(schema);
     }
 
     nextValue(schema) {
@@ -53,9 +55,3 @@ export default class ArgumentParser {
     }
 
 }
-
-const VALUE_PARSERS = {
-    [ArgumentTypes.BOOLEAN]: () => true,
-    [ArgumentTypes.STRING]: ArgumentParser.prototype.nextValue,
-    [ArgumentTypes.INTEGER]: ArgumentParser.prototype.nextValue,
-};
