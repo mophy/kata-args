@@ -6,8 +6,8 @@ import Argument from '../main/argument';
 const BOOLEAN = ArgumentTypes.BOOLEAN;
 const STRING = ArgumentTypes.STRING;
 const INTEGER = ArgumentTypes.INTEGER;
-const STRINGS =ArgumentTypes.STRINGS;
-const INTEGERS =ArgumentTypes.INTEGERS;
+const STRINGS = ArgumentTypes.STRINGS;
+const INTEGERS = ArgumentTypes.INTEGERS;
 
 function expectParseSucceed(input, params) {
     let schemas = params.map(param => new ArgumentSchema(param.flag, param.type));
